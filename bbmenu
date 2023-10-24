@@ -1,61 +1,36 @@
 #!/bin/bash 
 
 EditMenu () {
-gio open "$(grep -e "menuFile" ~/.blackboxrc|awk '{print $2}'|sed 's/ //g')"
+( gio open "$(grep -e "menuFile" ~/.blackboxrc|awk '{print $2}'|sed 's/ //g')" ) || ( xdg-open "$(grep -e "menuFile" ~/.blackboxrc|awk '{print $2}'|sed 's/ //g')")
 }
 
-Help ()
-{
-   # Display Help
+Help () {
    echo "Show Blackbox WM menus from command-line."
    echo 
-   echo "Syntax: bbmenu [-1|2|3|4|h]"
+   echo "Syntax: bbmenu [-1|2|3|4|e|h]"
    echo "options:"
    echo "1     Show Icon Menu."
    echo "2     Show Workspace Menu."
    echo "3     Show Root Main Menu."
-   echo "4     Show Control Menu."
+   echo "4     Show Control Menu (X Window Context...)."
+   echo "e     Edit menuFile."
    echo "h     Print this help message and exit."
    echo
 }
 
-while getopts ":1234he" option; do
+while getopts ":1234eh" option; do
    case $option in
-   1)	xdotool click --window 1923 1
-    	exit;;
-   2)	xdotool click --window 1923 2
-    	exit;;
-   3)	xdotool click --window 1923 3
-    	exit;;
-   4)	xdotool keydown Super ; xdotool click 3 ; sleep 0.2 && xdotool keyup Super
-		exit;;
-	h)  Help
-		exit;; 
-	e)  EditMenu
-		exit;; 
+    1)	xdotool click --window 1923 1
+        exit;;
+    2)	xdotool click --window 1923 2
+        exit;;
+    3)	xdotool click --window 1923 3
+        exit;;
+    4)	xdotool keydown Super ; xdotool click 3 ; sleep 0.2 && xdotool keyup Super
+        exit;; 
+    e)   EditMenu
+        exit;;
+    h)   Help
+        exit;;
    esac
 done
-
-# Analysis
-# repeated lines
-# all tags used
-# count include
-# count submenu and end
-# delete all comments
-# autoindent 
-
-
-#bbmenufile=`grep -e "menuFile" ~/.blackboxrc|cut -d: -f2-|tr '\t' '\b'`
-#bbstylefile=`grep -e "styleFile" ~/.blackboxrc|cut -d: -f2-|tr '\t' '\b'
-#blackbox -version
-
-# Version
-# Author
-# Files
-# Installed when?
-# PCG INFO
-# MenuFile
-# StyleFile
-# PID
-# pidof blackbox
-# 
