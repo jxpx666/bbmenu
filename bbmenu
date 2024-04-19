@@ -1,17 +1,28 @@
 #!/bin/bash 
 # jxpx@2024
 
-while getopts ":01234" option; do
+while getopts ":01234Kk" option; do
    case $option in
-    0)  xwininfo -root|grep "Window id:"|awk '{print $4}'
+    0)  # grep info
+         xwininfo -root|grep "Window id:"|awk '{print $4}'
         exit;;
-    1)	xdotool click --window "$(bbmenu -0)" 1
+    1)	# Root Icon Menu
+         xdotool click --window "$(bbmenu -0)" 1
         exit;;
-    2)	xdotool click --window "$(bbmenu -0)" 2
+    2)	# Workspace Root Menu
+         xdotool click --window "$(bbmenu -0)" 2
         exit;;
-    3)	xdotool click --window "$(bbmenu -0)" 3
+    3)	# Root Main Menu
+         xdotool click --window "$(bbmenu -0)" 3
         exit;;
-    4)	xdotool keydown Super ; xdotool click 3 ; sleep 0.2 && xdotool keyup Super
+    4)	# Window Menu
+         xdotool keydown Super ; xdotool click 3 ; sleep 0.2 && xdotool keyup Super
+        exit;;
+    K)   # Restart
+         killall -sUSR1 blackbox
+        exit;;
+    k)   # Reconfigure 
+         killall -sUSR2 blackbox    
         exit;;
    esac
 done
